@@ -19,4 +19,9 @@ class IosUniversalFrameworkExtension(project: Project) {
         action.execute(framework)
     }
 
+    fun framework(name: String, action: Action<UniversalFramework>) {
+        val framework = frameworks.maybeCreate(name)
+        action.execute(framework)
+    }
+
 }

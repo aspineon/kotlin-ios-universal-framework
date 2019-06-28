@@ -6,7 +6,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 class Podspec(private val project: Project, private val framework: UniversalFramework) {
 
     var summary: String = project.name
-    var homePage: String = ""
+    var homePage: String = "unknown"
     var license: String = "unknown"
     var iosDeploymentTarget: String = "8.0"
     var socialMediaUrl: String? = null
