@@ -5,7 +5,7 @@ plugins {
     id("com.gradle.plugin-publish") version "0.9.10"
 }
 
-group = "com.github.salomonbrys.gradle.kotlin.js"
+group = "com.github.salomonbrys.gradle.kotlin.nat.ios"
 version = "1.0.0"
 
 repositories {
@@ -36,13 +36,13 @@ publishing {
 }
 
 pluginBundle {
-    website = "https://github.com/SalomonBrys/kotlin-js-npm-bundle"
-    vcsUrl = "https://github.com/SalomonBrys/kotlin-js-npm-bundle.git"
-    tags = listOf("kotlin", "kotlin-js", "kotlin-multiplatform", "npm")
+    website = "https://github.com/SalomonBrys/kotlin-ios-universal-framework"
+    vcsUrl = "https://github.com/SalomonBrys/kotlin-ios-universal-framework.git"
+    tags = listOf("kotlin", "kotlin-native", "kotlin-multiplatform", "ios")
 
     plugins {
         create(project.name) {
-            id = "com.github.salomonbrys.gradle.kotlin.js.npm-bundle"
+            id = "com.github.salomonbrys.gradle.kotlin.nat.ios-universal-framework"
             description = "A Gradle plugin that generates a universal framework from Kotlin/Native frameworks and a binary associated podspec."
             displayName = project.name
         }
