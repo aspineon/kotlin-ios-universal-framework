@@ -1,9 +1,11 @@
 package com.github.salomonbrys.gradle.kotlin.nat
 
+import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.container
 import org.gradle.kotlin.dsl.getByType
+import org.gradle.util.ConfigureUtil
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 class IosUniversalFrameworkExtension(project: Project) {
@@ -19,9 +21,13 @@ class IosUniversalFrameworkExtension(project: Project) {
         action.execute(framework)
     }
 
+    fun ios(closure: Closure<*>) = ios(Action { ConfigureUtil.configure(closure, it) })
+
     fun framework(name: String, action: Action<UniversalFramework>) {
         val framework = frameworks.maybeCreate(name)
         action.execute(framework)
     }
+
+    fun framework(name: String, closure: Closure<*>) = framework(name, Action { ConfigureUtil.configure(closure, it) })
 
 }

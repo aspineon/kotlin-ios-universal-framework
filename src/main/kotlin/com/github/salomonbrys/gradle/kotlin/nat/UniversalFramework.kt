@@ -1,8 +1,10 @@
 package com.github.salomonbrys.gradle.kotlin.nat
 
+import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.Named
 import org.gradle.api.Project
+import org.gradle.util.ConfigureUtil
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
@@ -17,7 +19,9 @@ class UniversalFramework(private val name: String, private val project: Project,
 
     val podspec: Podspec get() = _podspec ?: Podspec(project, this).also { _podspec = it }
 
-    fun podspec(action: Action<Podspec>) = action.execute(podspec)
+    fun podspec(action: Action<in Podspec>) = action.execute(podspec)
+
+    fun podspec(closure: Closure<*>) = ConfigureUtil.configure(closure, podspec)
 
     override fun getName() = name
 
