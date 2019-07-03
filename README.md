@@ -12,6 +12,8 @@ If the podspec generation is configured, the plugin then creates:
 - The `iosGenDebugPodspec` & `iosGenReleasePodspec` tasks that generate the podspec files.
 - The "ios-framework" publication for maven deployment.
 
+A `local.podspec` is also created to allow for local usage.
+
 Usage in Gradle Script Kotlin
 -----------------------------
 
@@ -22,7 +24,7 @@ Simply apply the plugin :
 ```kotlin
 plugins {
     kotlin("multiplatform") version "1.3.40"
-    id("com.github.salomonbrys.gradle.kotlin.nat.ios-universal-framework") version "1.1.0"
+    id("com.github.salomonbrys.gradle.kotlin.nat.ios-universal-framework") version "1.2.0"
 }
 ```
 
@@ -95,7 +97,7 @@ Simply apply the plugin :
 ```groovy
 plugins {
     id 'org.jetbrains.kotlin.multiplatform' version '1.3.40'
-    id 'com.github.salomonbrys.gradle.kotlin.nat.ios-universal-framework' version '1.1.0'
+    id 'com.github.salomonbrys.gradle.kotlin.nat.ios-universal-framework' version '1.2.0'
 }
 ```
 

@@ -72,14 +72,17 @@ class IosUniversalFrameworkPlugin : Plugin<Project> {
                     }
 
                     if (framework.hasPodspec()) {
+                        val podspecDir = buildDir.resolve("publications/${framework.name}-framework")
+                        val mavenPodspec = podspecDir.resolve("maven-$buildTypeName.podspec")
+                        val localPodspec = podspecDir.resolve("local-$buildTypeName.podspec")
                         val genPodspecTask = task<Task>("${framework.name}Gen${buildTypeName.capitalize()}Podspec") {
                             group = "build"
-                            val output = buildDir.resolve("publications/${framework.name}-framework/$buildTypeName.podspec")
-                            outputs.files(output)
+                            outputs.files(mavenPodspec)
 
                             doLast {
-                                mkdir(output.parentFile)
-                                file(output).writeText(framework.podspec.toString(buildType))
+                                mkdir(podspecDir)
+                                file(mavenPodspec).writeText(framework.podspec.toString(buildType))
+                                file(localPodspec).writeText(framework.podspec.toString(buildType, zipTask.archivePath.absolutePath))
                             }
                         }
 
@@ -90,7 +93,7 @@ class IosUniversalFrameworkPlugin : Plugin<Project> {
                                         artifact(zipTask) {
                                             it.classifier = buildTypeName
                                         }
-                                        artifact(genPodspecTask.outputs.files.first()) {
+                                        artifact(mavenPodspec) {
                                             it.classifier = buildTypeName
                                             it.builtBy(genPodspecTask)
                                         }

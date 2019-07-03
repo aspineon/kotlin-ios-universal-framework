@@ -26,7 +26,7 @@ class Podspec(private val project: Project, private val framework: UniversalFram
 
     private fun String.escapeQuotes() = replace("'", "\\'")
 
-    internal fun toString(buildType: NativeBuildType) = buildString {
+    internal fun toString(buildType: NativeBuildType, path: String? = null) = buildString {
         appendln("""
             Pod::Spec.new do |spec|
                 spec.name                     = '${project.name.escapeQuotes()}-${buildType.name.toLowerCase()}'
@@ -35,12 +35,15 @@ class Podspec(private val project: Project, private val framework: UniversalFram
                 spec.homepage                 = '${homePage.escapeQuotes()}'
                 spec.license                  = '${license.escapeQuotes()}'
                 spec.authors                  = { ${authors.entries.joinToString { "'${it.key.escapeQuotes()}' => '${it.value.escapeQuotes()}'" }} }
-                spec.source                   = { :http => '${packageUrl(buildType.name.toLowerCase()).escapeQuotes()}' }
                 spec.vendored_frameworks      = '${project.name.escapeQuotes()}.framework'
                 spec.platform                 = :ios
                 spec.ios.deployment_target    = '${iosDeploymentTarget.escapeQuotes()}'
         """.trimIndent())
-        socialMediaUrl?.let   { appendln("    spec.social_media_url         = '${it.escapeQuotes()}'") }
+
+        if (path != null) { appendln("    spec.source                   = { :http => 'file:${path.escapeQuotes()}' }") }
+        else              { appendln("    spec.source                   = { :http => '${packageUrl(buildType.name.toLowerCase()).escapeQuotes()}' }") }
+
+            socialMediaUrl?.let   { appendln("    spec.social_media_url         = '${it.escapeQuotes()}'") }
         description?.let      { appendln("    spec.description              = '${it.escapeQuotes()}'") }
         documentationUrl?.let { appendln("    spec.documentation_url        = '${it.escapeQuotes()}'") }
         when {
